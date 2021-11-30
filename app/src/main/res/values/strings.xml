@@ -72,4 +72,7 @@
     <string name="copy">Copy</string>
     <string name="close">Close</string>
     <string name="keeping_it_ad_free">Keeping it Ad-Free</string>
+    <string name="physical_button_click">Physical button click</string>
+    <string name="physical_button_click_app">Physical button click app</string>
+    <string name="physical_button_double_click_app">Physical button double click app</string>
 </resources>

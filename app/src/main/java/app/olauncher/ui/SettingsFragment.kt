@@ -60,6 +60,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         populateStatusBar()
         populateDateTime()
         populateSwipeApps()
+        populatePhysicalButtonApps()
         populateActionHints()
         initClickListeners()
         initObservers()
@@ -104,6 +105,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
 
             R.id.swipeLeftApp -> showAppListIfEnabled(Constants.FLAG_SET_SWIPE_LEFT_APP)
             R.id.swipeRightApp -> showAppListIfEnabled(Constants.FLAG_SET_SWIPE_RIGHT_APP)
+            R.id.physicalButtonClickApp -> showAppListIfEnabled(Constants.FLAG_SET_PHYSICAL_BUTTON_CLICK_APP)
+            R.id.physicalButtonDoubleClickApp -> showAppListIfEnabled(Constants.FLAG_SET_PHYSICAL_BUTTON_DOUBLE_CLICK_APP)
 
             R.id.about -> {
                 prefs.aboutClicked = true
@@ -130,6 +133,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             R.id.appThemeText -> updateTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             R.id.swipeLeftApp -> toggleSwipeLeft()
             R.id.swipeRightApp -> toggleSwipeRight()
+            R.id.physicalButtonClickApp -> togglePhysicalButtonClick()
+            R.id.physicalButtonDoubleClickApp -> togglePhysicalButtonDoubleClick()
             R.id.toggleLock -> {
                 startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                 deviceManager.removeActiveAdmin(componentName) // for backward compatibility
@@ -157,6 +162,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         dateTime.setOnClickListener(this)
         swipeLeftApp.setOnClickListener(this)
         swipeRightApp.setOnClickListener(this)
+        physicalButtonClickApp.setOnClickListener(this)
+        physicalButtonDoubleClickApp.setOnClickListener(this)
         appThemeText.setOnClickListener(this)
         themeLight.setOnClickListener(this)
         themeDark.setOnClickListener(this)
@@ -183,6 +190,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         appThemeText.setOnLongClickListener(this)
         swipeLeftApp.setOnLongClickListener(this)
         swipeRightApp.setOnLongClickListener(this)
+        physicalButtonClickApp.setOnLongClickListener(this)
+        physicalButtonDoubleClickApp.setOnLongClickListener(this)
         toggleLock.setOnLongClickListener(this)
     }
 
@@ -203,6 +212,9 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         })
         viewModel.updateSwipeApps.observe(viewLifecycleOwner, {
             populateSwipeApps()
+        })
+        viewModel.updatePhysicalButtonApps.observe(viewLifecycleOwner, {
+            populatePhysicalButtonApps()
         })
     }
 
@@ -226,6 +238,29 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             swipeRightApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
             showToastShort(requireContext(), "Swipe right app disabled")
         }
+    }
+
+    private fun togglePhysicalButtonClick() {
+        prefs.physicalKeyClickEnabled = !prefs.physicalKeyClickEnabled
+        if (prefs.physicalKeyClickEnabled) {
+            physicalButtonClickApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColor))
+            showToastShort(requireContext(), "Physical button click enabled")
+        } else {
+            physicalButtonClickApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
+            showToastShort(requireContext(), "Physical button click disabled")
+        }
+    }
+
+    private fun togglePhysicalButtonDoubleClick() {
+        prefs.physicalKeyDoubleClickEnabled = !prefs.physicalKeyDoubleClickEnabled
+        if (prefs.physicalKeyDoubleClickEnabled) {
+            physicalButtonDoubleClickApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColor))
+            showToastShort(requireContext(), "Physical button double click enabled")
+        } else {
+            physicalButtonDoubleClickApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
+            showToastShort(requireContext(), "Physical button double click disabled")
+        }
+
     }
 
     private fun toggleStatusBar() {
@@ -452,6 +487,15 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             swipeLeftApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
         if (!prefs.swipeRightEnabled)
             swipeRightApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
+    }
+
+    private fun populatePhysicalButtonApps() {
+        physicalButtonClickApp.text = if (prefs.appNamePhysicalKeyClick.isEmpty()) "Select" else prefs.appNamePhysicalKeyClick
+        physicalButtonDoubleClickApp.text = if(prefs.appNamePhysicalKeyDoubleClick.isEmpty()) "Select" else prefs.appNamePhysicalKeyDoubleClick
+        if (!prefs.physicalKeyClickEnabled)
+            physicalButtonClickApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
+        if (!prefs.physicalKeyDoubleClickEnabled)
+            physicalButtonDoubleClickApp.setTextColor(requireContext().getColorFromAttr(R.attr.primaryColorTrans50))
     }
 
     private fun showAppListIfEnabled(flag: Int) {

@@ -122,10 +122,12 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
             else dateTimeLayout.visibility = View.GONE
         })
         keyDownSharedViewModel.onKeyClick.observe(viewLifecycleOwner, {
-
+            Log.d("WTF", "initObservers: 1")
+            openPhysicalKeyClickApp()
         })
         keyDownSharedViewModel.onKeyDoubleClick.observe(viewLifecycleOwner, {
-
+            Log.d("TAG", "initObservers: 2")
+            openPhysicalKeyDoubleClickApp()
         })
     }
 
@@ -362,11 +364,15 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
     }
 
     private fun openPhysicalKeyClickApp() {
-
+        if (!prefs.physicalKeyClickEnabled) return
+        if (prefs.appPackagePhysicalKeyClick.isNotEmpty())
+            launchApp(prefs.appNamePhysicalKeyClick, prefs.appPackagePhysicalKeyClick, android.os.Process.myUserHandle().toString())
     }
 
     private fun openPhysicalKeyDoubleClickApp() {
-
+        if (!prefs.physicalKeyDoubleClickEnabled) return
+        if (prefs.appPackagePhysicalKeyDoubleClick.isNotEmpty())
+            launchApp(prefs.appNamePhysicalKeyDoubleClick, prefs.appPackagePhysicalKeyDoubleClick, android.os.Process.myUserHandle().toString())
     }
 
     private fun showLongPressToast() = showToastShort(requireContext(), "Long press to select app")

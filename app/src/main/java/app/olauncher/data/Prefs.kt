@@ -23,6 +23,8 @@ class Prefs(context: Context) {
     private val DATE_TIME = "DATE_TIME"
     private val SWIPE_LEFT_ENABLED = "SWIPE_LEFT_ENABLED"
     private val SWIPE_RIGHT_ENABLED = "SWIPE_RIGHT_ENABLED"
+    private val PHYSICAL_KEY_CKICK_ENABLED = "PHYSICAL_KEY_CKICK_ENABLED"
+    private val PHYSICAL_KEY_DOUBLE_CKICK_ENABLED = "PHYSICAL_KEY_DOUBLE_CKICK_ENABLED"
     private val SCREEN_TIMEOUT = "SCREEN_TIMEOUT"
     private val HIDDEN_APPS = "HIDDEN_APPS"
     private val HIDDEN_APPS_UPDATED = "HIDDEN_APPS_UPDATED"
@@ -58,10 +60,16 @@ class Prefs(context: Context) {
 
     private val APP_NAME_SWIPE_LEFT = "APP_NAME_SWIPE_LEFT"
     private val APP_NAME_SWIPE_RIGHT = "APP_NAME_SWIPE_RIGHT"
+    private val APP_NAME_PHYSICAL_KEY_CLICK = "APP_NAME_PHYSICAL_KEY_CLICK"
+    private val APP_NAME_PHYSICAL_KEY_DOUBLE_CLICK = "APP_NAME_PHYSICAL_KEY_DOUBLE_CLICK"
     private val APP_PACKAGE_SWIPE_LEFT = "APP_PACKAGE_SWIPE_LEFT"
     private val APP_PACKAGE_SWIPE_RIGHT = "APP_PACKAGE_SWIPE_RIGHT"
+    private val APP_PACKAGE_PHYSICAL_KEY_CLICK = "APP_PACKAGE_PHYSICAL_KEY_CLICK"
+    private val APP_PACKAGE_PHYSICAL_KEY_DOUBLE_CLICK = "APP_PACKAGE_PHYSICAL_KEY_DOUBLE_CLICK"
     private val APP_USER_SWIPE_LEFT = "APP_USER_SWIPE_LEFT"
     private val APP_USER_SWIPE_RIGHT = "APP_USER_SWIPE_RIGHT"
+    private val APP_USER_PHYSICAL_BUTTON_CLICK = "APP_USER_PHYSICAL_BUTTON_CLICK"
+    private val APP_USER_PHYSICAL_BUTTON_DOUBLE_CLICK = "APP_USER_PHYSICAL_BUTTON_DOUBLE_CLICK"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0);
 
@@ -124,6 +132,14 @@ class Prefs(context: Context) {
     var swipeRightEnabled: Boolean
         get() = prefs.getBoolean(SWIPE_RIGHT_ENABLED, true)
         set(value) = prefs.edit().putBoolean(SWIPE_RIGHT_ENABLED, value).apply()
+
+    var physicalKeyClickEnabled: Boolean
+        get() = prefs.getBoolean(PHYSICAL_KEY_CKICK_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(PHYSICAL_KEY_CKICK_ENABLED, value).apply()
+
+    var physicalKeyDoubleClickEnabled: Boolean
+        get() = prefs.getBoolean(PHYSICAL_KEY_DOUBLE_CKICK_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(PHYSICAL_KEY_DOUBLE_CKICK_ENABLED, value).apply()
 
     var appTheme: Int
         get() = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_YES)
@@ -257,6 +273,14 @@ class Prefs(context: Context) {
         get() = prefs.getString(APP_NAME_SWIPE_RIGHT, "Phone").toString()
         set(value) = prefs.edit().putString(APP_NAME_SWIPE_RIGHT, value).apply()
 
+    var appNamePhysicalKeyClick: String
+        get() = prefs.getString(APP_NAME_PHYSICAL_KEY_CLICK, "").toString()
+        set(value) = prefs.edit().putString(APP_NAME_PHYSICAL_KEY_CLICK, value).apply()
+
+    var appNamePhysicalKeyDoubleClick: String
+        get() = prefs.getString(APP_NAME_PHYSICAL_KEY_DOUBLE_CLICK, "").toString()
+        set(value) = prefs.edit().putString(APP_NAME_PHYSICAL_KEY_DOUBLE_CLICK, value).apply()
+
     var appPackageSwipeLeft: String
         get() = prefs.getString(APP_PACKAGE_SWIPE_LEFT, "").toString()
         set(value) = prefs.edit().putString(APP_PACKAGE_SWIPE_LEFT, value).apply()
@@ -265,6 +289,14 @@ class Prefs(context: Context) {
         get() = prefs.getString(APP_PACKAGE_SWIPE_RIGHT, "").toString()
         set(value) = prefs.edit().putString(APP_PACKAGE_SWIPE_RIGHT, value).apply()
 
+    var appPackagePhysicalKeyClick: String
+        get() = prefs.getString(APP_PACKAGE_PHYSICAL_KEY_CLICK, "").toString()
+        set(value) = prefs.edit().putString(APP_PACKAGE_PHYSICAL_KEY_CLICK, value).apply()
+
+    var appPackagePhysicalKeyDoubleClick: String
+        get() = prefs.getString(APP_PACKAGE_PHYSICAL_KEY_DOUBLE_CLICK, "").toString()
+        set(value) = prefs.edit().putString(APP_PACKAGE_PHYSICAL_KEY_DOUBLE_CLICK, value).apply()
+
     var appUserSwipeLeft: String
         get() = prefs.getString(APP_USER_SWIPE_LEFT, "").toString()
         set(value) = prefs.edit().putString(APP_USER_SWIPE_LEFT, value).apply()
@@ -272,6 +304,14 @@ class Prefs(context: Context) {
     var appUserSwipeRight: String
         get() = prefs.getString(APP_USER_SWIPE_RIGHT, "").toString()
         set(value) = prefs.edit().putString(APP_USER_SWIPE_RIGHT, value).apply()
+
+    var appUserPhysicalButtonClick: String
+        get() = prefs.getString(APP_USER_PHYSICAL_BUTTON_CLICK, "").toString()
+        set(value) = prefs.edit().putString(APP_USER_PHYSICAL_BUTTON_CLICK, value).apply()
+
+    var appUserPhysicalButtonDoubleClick: String
+        get() = prefs.getString(APP_USER_PHYSICAL_BUTTON_DOUBLE_CLICK, "").toString()
+        set(value) = prefs.edit().putString(APP_USER_PHYSICAL_BUTTON_DOUBLE_CLICK, value).apply()
 
     fun getAppName(location: Int): String {
         return when (location) {

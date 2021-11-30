@@ -24,6 +24,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val refreshHome = MutableLiveData<Boolean>()
     val toggleDateTime = MutableLiveData<Boolean>()
     val updateSwipeApps = MutableLiveData<Any>()
+    val updatePhysicalButtonApps = MutableLiveData<Any>()
     val appList = MutableLiveData<List<AppModel>>()
     val hiddenApps = MutableLiveData<List<AppModel>>()
     val isOlauncherDefault = MutableLiveData<Boolean>()
@@ -100,6 +101,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 prefs.appUserSwipeRight = appModel.user.toString()
                 updateSwipeApps()
             }
+            Constants.FLAG_SET_PHYSICAL_BUTTON_CLICK_APP -> {
+                prefs.appNamePhysicalKeyClick = appModel.appLabel
+                prefs.appPackagePhysicalKeyClick = appModel.appPackage
+                prefs.appUserPhysicalButtonClick = appModel.user.toString()
+                updatePhysicalButtonApps()
+            }
+            Constants.FLAG_SET_PHYSICAL_BUTTON_DOUBLE_CLICK_APP -> {
+                prefs.appNamePhysicalKeyDoubleClick = appModel.appLabel
+                prefs.appPackagePhysicalKeyDoubleClick = appModel.appPackage
+                prefs.appUserPhysicalButtonDoubleClick = appModel.user.toString()
+                updatePhysicalButtonApps()
+            }
         }
     }
 
@@ -117,6 +130,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun updateSwipeApps() {
         updateSwipeApps.postValue(Unit)
+    }
+
+    private fun updatePhysicalButtonApps() {
+        updatePhysicalButtonApps.postValue(Unit)
     }
 
     private fun launchApp(packageName: String, userHandle: UserHandle) {
