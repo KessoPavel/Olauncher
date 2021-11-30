@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
     private lateinit var navController: NavController
     private lateinit var viewModel: MainViewModel
+    private lateinit var onKeyDownViewModel: KeyDownSharedViewModel
 
     override fun onBackPressed() {
         if (navController.currentDestination?.id != R.id.mainFragment)
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        onKeyDownViewModel = ViewModelProvider(this).get(KeyDownSharedViewModel::class.java)
         if (prefs.firstOpen) {
             viewModel.firstOpen(true)
             prefs.firstOpen = false
@@ -163,5 +166,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        onKeyDownViewModel.onKeyDown(keyCode, event)
+        return super.onKeyDown(keyCode, event)
     }
 }

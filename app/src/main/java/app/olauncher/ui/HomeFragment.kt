@@ -10,12 +10,13 @@ import android.os.Vibrator
 import android.provider.Settings
 import android.view.*
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import app.olauncher.KeyDownSharedViewModel
 import app.olauncher.MainViewModel
 import app.olauncher.R
 import app.olauncher.data.AppModel
@@ -30,6 +31,7 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
 
     private lateinit var prefs: Prefs
     private lateinit var viewModel: MainViewModel
+    private lateinit var keyDownSharedViewModel: KeyDownSharedViewModel
     private lateinit var deviceManager: DevicePolicyManager
     private lateinit var vibrator: Vibrator
 
@@ -42,6 +44,9 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         prefs = Prefs(requireContext())
         viewModel = activity?.run {
             ViewModelProvider(this).get(MainViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+        keyDownSharedViewModel = activity?.run {
+            ViewModelProvider(this).get(KeyDownSharedViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
         deviceManager = context?.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
@@ -114,6 +119,9 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         viewModel.toggleDateTime.observe(viewLifecycleOwner, {
             if (it) dateTimeLayout.visibility = View.VISIBLE
             else dateTimeLayout.visibility = View.GONE
+        })
+        keyDownSharedViewModel.onKeyDown.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
         })
     }
 
