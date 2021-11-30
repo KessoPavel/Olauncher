@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
@@ -120,8 +121,11 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
             if (it) dateTimeLayout.visibility = View.VISIBLE
             else dateTimeLayout.visibility = View.GONE
         })
-        keyDownSharedViewModel.onKeyDown.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+        keyDownSharedViewModel.onKeyClick.observe(viewLifecycleOwner, {
+
+        })
+        keyDownSharedViewModel.onKeyDoubleClick.observe(viewLifecycleOwner, {
+
         })
     }
 
@@ -355,6 +359,14 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
             viewModel.setWallpaperWorker()
         }
         requireActivity().recreate()
+    }
+
+    private fun openPhysicalKeyClickApp() {
+
+    }
+
+    private fun openPhysicalKeyDoubleClickApp() {
+
     }
 
     private fun showLongPressToast() = showToastShort(requireContext(), "Long press to select app")

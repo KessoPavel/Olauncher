@@ -4,5 +4,4 @@ import android.view.KeyEvent
 
 data class KeyDownModel(
     val keyCode: Int,
-    val event: KeyEvent?
 )

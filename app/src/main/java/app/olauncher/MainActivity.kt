@@ -7,6 +7,8 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
@@ -169,7 +171,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        onKeyDownViewModel.onKeyDown(keyCode, event)
+        onKeyDownViewModel.onKeyDown(keyCode)
         return super.onKeyDown(keyCode, event)
     }
 }
