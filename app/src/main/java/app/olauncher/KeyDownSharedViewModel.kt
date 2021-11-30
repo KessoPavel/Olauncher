@@ -1,15 +1,10 @@
 package app.olauncher
 
-import android.os.Handler
-import android.os.Looper
-import android.view.KeyEvent
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.olauncher.data.KeyDownModel
 import app.olauncher.helper.SingleLiveEvent
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

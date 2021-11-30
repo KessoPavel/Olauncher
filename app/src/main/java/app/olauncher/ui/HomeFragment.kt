@@ -122,11 +122,9 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
             else dateTimeLayout.visibility = View.GONE
         })
         keyDownSharedViewModel.onKeyClick.observe(viewLifecycleOwner, {
-            Log.d("WTF", "initObservers: 1")
             openPhysicalKeyClickApp()
         })
         keyDownSharedViewModel.onKeyDoubleClick.observe(viewLifecycleOwner, {
-            Log.d("TAG", "initObservers: 2")
             openPhysicalKeyDoubleClickApp()
         })
     }
